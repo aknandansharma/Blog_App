@@ -13,6 +13,9 @@ const app = express();
 // dotenv config
 dotenv.config();
 
+// Router Import
+const userRoutes = require('./routes/userRoutes')
+
 // connect to database
 connectDB();
 
@@ -22,11 +25,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // routes
-app.get('/', (req, res) => {
-    res.status(200).send({
-        message: 'Hello World'
-    })
-})
+app.use('/api/v1/user', userRoutes)
 
 // port
 const PORT = process.env.PORT || 8080;
@@ -35,3 +34,6 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`.bgMagenta.white)
 })
+
+
+// start with 01:12:00
