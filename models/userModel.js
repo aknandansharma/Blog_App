@@ -13,7 +13,13 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: [true, 'password is requried']
-    }
+    },
+    blogs:[
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'Blog'
+        }
+    ]
 }, {timestamps: true})
 
 
