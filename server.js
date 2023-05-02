@@ -15,6 +15,8 @@ dotenv.config();
 
 // Router Import
 const userRoutes = require('./routes/userRoutes')
+const blogRoutes = require('./routes/blogRoutes')
+
 
 // connect to database
 connectDB();
@@ -26,6 +28,7 @@ app.use(express.json());
 
 // routes
 app.use('/api/v1/user', userRoutes)
+app.use('/api/v1/blog', blogRoutes)
 
 // port
 const PORT = process.env.PORT || 8080;
@@ -35,5 +38,3 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`.bgMagenta.white)
 })
 
-
-// start with 01:12:00
