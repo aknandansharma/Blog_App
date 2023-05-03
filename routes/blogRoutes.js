@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllBlogsController, createBlogController, updateBlogController, deleteBlogController, getSingleBlogsController } = require('../controllers/blogControllers');
+const { getAllBlogsController, createBlogController, updateBlogController, deleteBlogController, getSingleBlogsController, userBlogController } = require('../controllers/blogControllers');
 
 
 // Router
@@ -21,6 +21,8 @@ router.put('/update-blog/:id', updateBlogController)
 // DELETE || delete blog
 router.delete('/delete-blog/:id', deleteBlogController)
 
+// GET || user blog
+router.get('/user-blog/:id', userBlogController)
 
 
 

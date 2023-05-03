@@ -149,6 +149,32 @@ exports.deleteBlogController = async (req, res) => {
     }
 }
 
+
+// @desc    GET User blogs
+exports.userBlogController = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.params.id).populate('blogs');
+        if(!user) {
+            return res.status(404).send({
+                message: 'User Blog not found',
+                success: false
+            })
+        }
+        return res.status(200).send({
+            message: 'User Blogs',
+            success: true,
+            user
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(400).send({
+            message: 'Error in Getting USERS Blog',
+            success: false,
+            error
+        })
+    }
+}
+
 // There is error in this code so please fix it in Delete Blog Controller. 
 // start with 1:36:00
 
