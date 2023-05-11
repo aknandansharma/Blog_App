@@ -1,11 +1,50 @@
-import React from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import React, {useState} from 'react'
+import { Box, Typography, TextField, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import toast from "react-hot-toast";
+import axios from 'axios'
 
 const Login = () => {
+  //Navigate to login
   const navigate = useNavigate()
-    return (
-      <>
+
+  // State
+  const [inputs, setInputs] = useState({
+    email:"",
+    password:""
+  })
+
+  // handleChange input change
+  const handleChange = (e) => {
+    setInputs(prevState => ({
+      ...prevState,
+      [e.target.name] : e.target.value,
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log(inputs)
+    // Login logic here
+    try {
+      const data = await axios.post(`/api/v1/user/login`, {
+        email:inputs.email,
+        password:inputs.password,
+      })
+      if(data.success){
+        toast.success("User Register Successfully");
+        navigate('/')
+      }
+
+
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+  return (
+    <form onSubmit={handleSubmit} > 
       <Box
         maxWidth={450}
         display={'flex'}
@@ -24,36 +63,46 @@ const Login = () => {
             padding= {2}
             textAlign={'center'}
             textTransform={'uppercase'}
-          >Login</Typography>
-         
+          >login</Typography>
+
+          {/* start the inputs text fields */}
+
           <TextField
             placeholder='email'
-            name='email'
+            value={inputs.email}
+            onChange={handleChange}
+            name= "email"
             margin='normal'
             type='email'
             required
            />
           <TextField
             placeholder='password'
-            name='password'
+            value={inputs.password}
+            onChange={handleChange}
+            name= "password"
             margin='normal'
             type='password'
             required
            />
           
           <Button
+            type="submit"
             sx={{borderReduis: 3, marginTop:3}}
             variant='contained'
             color={'primary'}
-          >Login</Button>
+          >LogIn</Button>
           <Button
             onClick={() => navigate('/register')}
             sx={{borderReduis: 3, marginTop:3}}
             color={'primary'}
-          >Create New Account</Button>
+          >You Don't have an account? Please Register</Button>
         </Box>
-    </>
-    );
-};
+      </form>
+  )
+}
 
-export default Login;
+export default Login
+
+
+// Start with 2:34
