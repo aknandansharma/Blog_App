@@ -1,12 +1,14 @@
 import React, {useState} from 'react'
 import { Box, Typography, TextField, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import toast from "react-hot-toast";
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { authActions } from "../redux/Store"
 
 const Login = () => {
   //Navigate to login
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   // State
   const [inputs, setInputs] = useState({
@@ -27,12 +29,13 @@ const Login = () => {
     // console.log(inputs)
     // Login logic here
     try {
-      const data = await axios.post(`/api/v1/user/login`, {
+      const { data } = await axios.post(`/api/v1/user/login`, {
         email:inputs.email,
         password:inputs.password,
       })
       if(data.success){
-        toast.success("User Register Successfully");
+        dispatch(authActions.login())
+        alert("User Login Successfully");
         navigate('/')
       }
 
@@ -91,7 +94,7 @@ const Login = () => {
             sx={{borderReduis: 3, marginTop:3}}
             variant='contained'
             color={'primary'}
-          >LogIn</Button>
+          >Sign In</Button>
           <Button
             onClick={() => navigate('/register')}
             sx={{borderReduis: 3, marginTop:3}}
@@ -105,4 +108,4 @@ const Login = () => {
 export default Login
 
 
-// Start with 2:34
+// Start with 

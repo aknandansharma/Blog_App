@@ -1,16 +1,29 @@
 import React, {useState} from "react";
 import { Box, AppBar, Toolbar, Button, Typography, Tabs, Tab } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux'
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { authActions } from "../redux/Store";
 
 const NavBar = () => {
-
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     // Global State
     const isLogin = useSelector(state => state.isLogin)
-    console.log(isLogin)
+    // console.log(isLogin)
 
     // State
     const [value, setValue] = useState()
+
+    // logout button
+    const handleLogOut = () => {
+        try {
+            dispatch(authActions.logout())
+            alert('Logout Successfully!')
+            navigate('/login')
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
@@ -51,6 +64,7 @@ const NavBar = () => {
                         </>)}
                         {isLogin && (
                             <Button
+                            onClick={handleLogOut}
                             style={{
                                 margin: 1,
                                 color: "red",
